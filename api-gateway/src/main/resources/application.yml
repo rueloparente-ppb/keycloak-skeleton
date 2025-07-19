@@ -1,0 +1,27 @@
+server:
+  port: 8083
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: hello-service
+          uri: lb://hello-service # lb:// load-balance via Eureka
+          predicates:
+            - Path=/api/hello/**
+        - id: user-service
+          uri: lb://user-service
+          predicates:
+            - Path=/api/users/**
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8080/realms/spring-boot-microservices
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/

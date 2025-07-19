@@ -1,0 +1,13 @@
+name: "my-shift"
+services:
+  keycloak:
+    image: quay.io/keycloak/keycloak:latest
+    container_name: keycloak
+    command: [start-dev, --import-realm, --db-url 'jdbc:h2:file:/opt/keycloak/data/h2/keycloakdb;NON_KEYWORDS=VALUE;AUTO_SERVER=true']
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./configs/keycloak/import:/opt/keycloak/data/import
